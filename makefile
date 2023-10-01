@@ -1,9 +1,10 @@
-BINARY=bin/FTM-6000_Readout
+BINDIR=bin
+BINARY=$(BINDIR)/FTM-6000_Readout
 CODEDIRS=./src
 INCDIRS=I./inc
 LIBS=
 OBJDIR=obj
-
+MKDIR=mkdir
 CXX=g++
 OPT=-O2
 # generate files that encode make rules for .h dependencies
@@ -18,7 +19,9 @@ CPPFILES=$(foreach D,$(CODEDIRS),$(wildcard $(D)/*.cpp))
 OBJECTS=$(patsubst ./src/%.cpp,./$(OBJDIR)/%.o,$(CPPFILES))
 DEPFILES=$(patsubst ./%.cpp,./$(OBJDIR)%.d,$(CPPFILES))
 
-all: $(BINARY)
+DIRS := $(BINDIR) $(OBJDIR)
+
+all: $(DIRS) $(BINARY)
 
 debug: CPPFLAGS= -O0 -Wmain -g -ansi -std=c++14 -pedantic -Wall $(foreach D,$(INCDIRS),-$(D)) -fsanitize=address -fno-omit-frame-pointer -lasan
 debug: LIBS=-lasan
@@ -30,7 +33,9 @@ $(BINARY): $(OBJECTS)
 # only want the .c files dependency here, thus $< instead of $^.
 ./$(OBJDIR)/%.o:./$(CODEDIRS)/%.cpp
 	$(CXX) $(CPPFLAGS) -c -o $@ $<
-
+	
+$(DIRS):
+	$(MKDIR) -p $@
 clean:
 	rm -rf $(BINARY) $(OBJDIR)/*
 
