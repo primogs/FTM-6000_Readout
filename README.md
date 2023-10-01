@@ -32,3 +32,9 @@ The serial interface has a baud rate of 38400, 8 data bits, no parity bit and on
 ![screenshot](/documentation/images/scope2.jpg)
 
 The EEPROM has two "pages" of 64 K-byte each. Thus, the address reset to zero if the second page is sent.
+
+## References I used ##
+Thanks to Geoffrey Hunter for his helpful [article](https://blog.mbedded.ninja/programming/operating-systems/linux/linux-serial-ports-using-c-cpp/) about the serial port under Linux.
+
+Thanks to kz7zzz for his [FTM-400dr Programmer](https://github.com/kz7zzz/ftm-400d). The data structure of the FTM-6000 is not equal to the structure of the FTM-400 but similar.
+
